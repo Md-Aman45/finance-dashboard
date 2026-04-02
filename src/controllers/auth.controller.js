@@ -16,6 +16,7 @@ const registerUserController = async (req, res) => {
             message: "User registered successfully",
             data: user,
         });
+
     } catch (err) {
         res.status(400).json({
             success: false,
@@ -40,6 +41,7 @@ const loginUserController = async (req, res) => {
             message: "Login successful",
             data: user,
         });
+        
     } catch (err) {
         res.status(400).json({
             success: false,

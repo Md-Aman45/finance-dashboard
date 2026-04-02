@@ -10,7 +10,6 @@ const mongoose = require('mongoose');
  * @property {Date} createdAt - The date the user was created
  * @description user model schema definition for MongoDB using Mongoose
 */
-
 const userSchema = new mongoose.Schema(
     {
         name: {

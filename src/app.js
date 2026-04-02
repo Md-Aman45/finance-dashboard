@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const authRouter = require('./routes/auth.routes');
+const transactionRouter = require('./routes/transaction.routes');
 const { protect } = require('../src/middlewares/auth.middleware');
 const { authorize } = require('../src/middlewares/role.middleware');
 
@@ -14,6 +15,7 @@ app.use(cors());
 
 // routes...
 app.use("/api/auth", authRouter);
+app.use("/api/transactions", transactionRouter);
 
 
 // Test route to verify authentication middleware...
