@@ -10,7 +10,7 @@ const transRouter = express.Router();
 /**
  * Create a new transaction
  * @description This route is for creating a new transaction
- * @access Private
+ * @access FOR ALL AUTHENTICATED USERS - Admin, Analyst, Viewer
 */
 transRouter.post('/create', protect, create);
 
@@ -28,7 +28,7 @@ transRouter.delete('/remove/:id', protect, authorize("admin"), remove);
 /**
  * Get all transactions or a single transaction by ID
  * @description This is for both admin and user to view transactions.
- * @access Admin and User
+ * @access Admin and Analyst can view all transactions, while Viewer can only view transactions assigned to them.
 */
 transRouter.get('/', protect, getAll);
 transRouter.get('/:id', protect, getOne);

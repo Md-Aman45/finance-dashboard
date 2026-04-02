@@ -47,7 +47,6 @@ const loginUserController = async (req, res) => {
             success: false,
             message: err.message,
         });
-        console.log(err);
     }
 };
 
