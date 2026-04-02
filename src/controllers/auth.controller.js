@@ -7,7 +7,6 @@ const { registerUser, loginUser } = require('../services/auth.service');
  * @description This function handles the user registration process by calling the registerUser service function and sending an appropriate response back to the client.
  * @access Public
 */
-
 const registerUserController = async (req, res) => {
     try {
         const user = await registerUser(req.body);
