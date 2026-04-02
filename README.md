@@ -92,6 +92,8 @@ src/
 
 server.js
 .env
+.gitignore
+README.md
 ```
 
 ---
