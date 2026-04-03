@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const authRouter = require('./routes/auth.routes');
+const userRouter = require('./routes/user.routes');
 const transactionRouter = require('./routes/transaction.routes');
 const dashboardRouter = require('./routes/dashboard.routes');
 const { protect } = require('../src/middlewares/auth.middleware');
@@ -21,6 +22,11 @@ app.use(cors());
  * Auth routes are accessible to all authenticated users (Admin, Analyst, Viewer).
 */
 app.use("/api/auth", authRouter);
+
+/**
+ * User routes are accessible to all authenticated users (Admin).
+*/
+app.use("/api/users", userRouter);
 
 /**
  * Transaction routes are accessible to all authenticated users (Admin, Analyst, Viewer).

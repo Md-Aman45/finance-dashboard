@@ -67,6 +67,11 @@ const loginUser = async (data) => {
         throw new Error("Invlaid credentials");
     }
 
+
+    if (user.status === "inactive") {
+        throw new Error("Your account is inactive. Contact admin.");
+    }
+
     const token = jwt.sign(
         { id: user._id, role: user.role },
         process.env.JWT_SECRET,
@@ -79,6 +84,7 @@ const loginUser = async (data) => {
             name: user.name,
             email: user.email,
             role: user.role,
+            status: user.status,
         }, 
         token,
     };

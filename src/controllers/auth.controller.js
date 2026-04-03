@@ -1,4 +1,3 @@
-const { success } = require('zod');
 const { registerUser, loginUser } = require('../services/auth.service');
 
 
