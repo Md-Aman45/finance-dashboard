@@ -55,8 +55,6 @@ const getAll = async (req, res) => {
             success: false, 
             message: error.message 
         });
-        console.log(error);
-        console.log("USER:", req.user);
     }
 };
 

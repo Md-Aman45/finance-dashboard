@@ -62,7 +62,7 @@ const getTransactions = async (query, user) => {
  * @description This function retrieves a single transaction from the database based on its ID. It checks if the transaction exists and is not marked as deleted. If the user has a "viewer" role, it also ensures that the transaction was created by the user. If the transaction is found, it is returned; otherwise, an error is thrown indicating that the transaction was not found.
  * @access Private
 */
-const getTransactionById = async (id) => {
+const getTransactionById = async (id, user) => {
     let filter = {
         _id: id,
         isDeleted: false,
