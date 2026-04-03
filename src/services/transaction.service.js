@@ -27,7 +27,7 @@ const createTransaction = async (data, userId) => {
  * @access Private
 */
 const getTransactions = async (query, user) => {
-    const { page = 1, limit = 10, type, category } = query;
+    const { page = 1, limit = 10, type, category, startDate, endDate } = query;
 
     const filter = { isDeleted: false };
 
@@ -37,6 +37,13 @@ const getTransactions = async (query, user) => {
 
     if (type) filter.type = type;
     if (category) filter.category = category;
+
+    if (startDate && endDate) {
+        filter.date = {
+            $gte: new Date(startDate),
+            $lte: new Date(endDate),
+        };
+    };
 
     const transactions = await Transaction.find(filter)
         .skip((page - 1) * limit)
@@ -52,12 +59,26 @@ const getTransactions = async (query, user) => {
 
 /**
  * Retrieves a transaction by its ID
- * @param {string} id - The transaction ID
- * @description Soft delete don’t remove data, just mark it as deleted 
+ * @description This function retrieves a single transaction from the database based on its ID. It checks if the transaction exists and is not marked as deleted. If the user has a "viewer" role, it also ensures that the transaction was created by the user. If the transaction is found, it is returned; otherwise, an error is thrown indicating that the transaction was not found.
  * @access Private
 */
 const getTransactionById = async (id) => {
-    return await Transaction.findOne({ _id: id, isDeleted: false });
+    let filter = {
+        _id: id,
+        isDeleted: false,
+    };
+
+    if (user.role === "viewer") {
+        filter.createdBy = user.id;
+    }
+
+    const transaction = await Transaction.findOne(filter);
+
+    if (!transaction) {
+        throw new Error("Transaction not found");
+    }
+
+    return transaction;
 };
 
 
@@ -71,7 +92,17 @@ const getTransactionById = async (id) => {
  * @access Private
  */
 const updateTransaction = async (id, data) => {
-    return await Transaction.findByIdAndUpdate(id, data, { new: true });
+    const transaction = await Transaction.findOneAndUpdate(
+        { _id: id, isDeleted: false },
+        data,
+        { new: true }
+    );
+
+    if (!transaction) {
+        throw new Error("Transaction not found or deleted");
+    }
+
+    return transaction;
 };
 
 
@@ -80,7 +111,7 @@ const updateTransaction = async (id, data) => {
 /**
  * Soft Deletes a transaction by its ID
  * @param {string} id - The transaction ID
- * @description This function marks a single transaction as deleted in the database based on its ID. It only updates transactions that are not already marked as deleted.
+ * @description This function performs a soft delete on a transaction by its ID. Instead of removing the transaction from the database, it sets the `isDeleted` flag to `true`. This allows for the transaction to be retained in the database while being marked as deleted, preventing it from being returned in future queries that filter for non-deleted transactions.
  * @access Private
 */
 const deleteTransaction = async (id) => {

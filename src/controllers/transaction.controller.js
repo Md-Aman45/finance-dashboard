@@ -70,7 +70,7 @@ const getAll = async (req, res) => {
 */
 const getOne = async (req, res) => {
     try {
-        const transaction = await getTransactionById(req.params.id);
+        const transaction = await getTransactionById(req.params.id, req.user);
 
         res.json({
             success: true,

@@ -4,19 +4,18 @@
 
 This project is a backend system for a finance dashboard that manages users, financial transactions, and provides analytical insights.
 
-It is designed with a clean architecture, role-based access control, and real-world data handling in mind.
-The goal of this project is to demonstrate strong backend fundamentals, not just feature implementation.
+It is built with a clean, scalable architecture and focuses on real-world backend practices such as authentication, authorization, and data-level security.
 
 ---
 
 ## 🧠 Key Highlights
 
-* 🔐 JWT-based Authentication (No cookies, API-focused design)
+* 🔐 JWT-based Authentication (stateless, header-based)
 * 🛡️ Role-Based Access Control (Viewer, Analyst, Admin)
-* 📊 Data-Level Security (Users can only access permitted data)
+* 🔒 Data-Level Security (users access only permitted data)
 * ⚙️ Clean Architecture (Controller → Service → Model)
-* 📈 Aggregation APIs for dashboard insights
-* 🧩 Simple, scalable, and maintainable codebase
+* 📊 Aggregation APIs for dashboard analytics
+* 🧩 Simple, maintainable, and scalable codebase
 
 ---
 
@@ -35,7 +34,16 @@ The goal of this project is to demonstrate strong backend fundamentals, not just
 | ------- | ------------------------------------------------ |
 | Viewer  | Create & view own transactions                   |
 | Analyst | Create, view all transactions + dashboard access |
-| Admin   | Full CRUD access                                 |
+| Admin   | Full CRUD + user management                      |
+
+---
+
+## 👥 User Management (Admin Only)
+
+* Get all users
+* Get user by Id
+* Update user role (viewer / analyst / admin)
+* Activate / deactivate users
 
 ---
 
@@ -43,14 +51,14 @@ The goal of this project is to demonstrate strong backend fundamentals, not just
 
 * Create transaction
 * Get all transactions (with pagination & filters)
-* Get single transaction
+* Get single transaction (secure access)
 * Update transaction (Admin only)
 * Delete transaction (Soft delete)
 
 ### 🔍 Features
 
 * Pagination (`page`, `limit`)
-* Filtering (`type`, `category`)
+* Filtering (`type`, `category`, `date range`)
 * Role-based data visibility:
 
   * Viewer → only own data
@@ -68,11 +76,11 @@ The goal of this project is to demonstrate strong backend fundamentals, not just
 
 ### 🔹 Category Breakdown
 
-* Expense/Income grouped by category
+* Grouped financial data by category
 
 ### 🔹 Monthly Trends
 
-* Aggregated financial data by month
+* Aggregated data by month and year
 
 👉 Access restricted to **Analyst & Admin only**
 
@@ -91,7 +99,7 @@ src/
  └── app.js
 
 server.js
-.env
+.env.example
 .gitignore
 README.md
 ```
@@ -104,6 +112,15 @@ README.md
 
 * `POST /api/auth/register`
 * `POST /api/auth/login`
+
+---
+
+### 👥 Users (Admin)
+
+* `GET /api/users`
+* `GET /api/users/:id`
+* `PATCH /api/users/:id/role`
+* `PATCH /api/users/:id/status`
 
 ---
 
@@ -129,7 +146,7 @@ README.md
 
 All APIs can be tested using Postman.
 
-Use header:
+Use Authorization header:
 
 ```
 Authorization: Bearer <JWT_TOKEN>
@@ -143,39 +160,42 @@ Authorization: Bearer <JWT_TOKEN>
 
 2. Install dependencies
 
-   ```
-   npm install
-   ```
+```
+npm install
+```
 
-3. Create `.env` file
+3. Create `.env` file using `.env.example`
 
-   ```
-   PORT=8080
-   MONGO_URI=your_mongodb_uri
-   JWT_SECRET=your_secret
-   ```
+Copy `.env.example` and rename it to `.env`, then update values:
+
+```
+PORT=8080
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_secret
+```
 
 4. Run the server
 
-   ```
-   npm run dev
-   ```
+```
+npm run dev
+```
 
 ---
 
 ## 💡 Design Decisions
 
 * Used JWT in headers instead of cookies for simplicity and API-first design
-* Implemented both **route-level authorization** and **data-level filtering**
-* Focused on clean, maintainable code rather than over-engineering
+* Implemented **route-level authorization** (RBAC)
+* Applied **data-level filtering** for secure data access
+* Focused on clarity and maintainability instead of over-engineering
 
 ---
 
 ## 🏁 Conclusion
 
-This project demonstrates a complete backend system with authentication, authorization, data management, and analytics.
+This project demonstrates a complete backend system with authentication, authorization, user management, transaction handling, and analytics.
 
-The focus was on writing clean, understandable, and scalable code that reflects real-world backend practices.
+It reflects practical backend design with a focus on clean structure and real-world usability.
 
 ---
 

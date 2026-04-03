@@ -44,12 +44,10 @@ app.use("/api/dashboard", dashboardRouter);
 
 
 
-
 // Test route to verify authentication middleware...
 app.get("/test", protect, (req, res) => {
   res.json({ user: req.user });
 });
-
 
 
 
