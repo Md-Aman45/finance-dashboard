@@ -75,7 +75,10 @@ const getTransactionById = async (id, user) => {
     const transaction = await Transaction.findOne(filter);
 
     if (!transaction) {
-        throw new Error("Transaction not found");
+        return res.status(404).json({
+            success: false,
+            message: "Transaction not found"
+        });
     }
 
     return transaction;
@@ -99,7 +102,10 @@ const updateTransaction = async (id, data) => {
     );
 
     if (!transaction) {
-        throw new Error("Transaction not found or deleted");
+        return res.status(404).json({
+            success: false,
+            message: "Transaction not found"
+        });
     }
 
     return transaction;

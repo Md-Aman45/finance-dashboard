@@ -58,13 +58,14 @@ const loginUser = async (data) => {
     }
 
     const user = await User.findOne({ email }).select("+password");
+    
     if (!user) {
         throw new Error("Invalid credentials");
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-        throw new Error("Invlaid credentials");
+        throw new Error("Invalid credentials");
     }
 
 
