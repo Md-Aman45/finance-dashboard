@@ -75,10 +75,7 @@ const getTransactionById = async (id, user) => {
     const transaction = await Transaction.findOne(filter);
 
     if (!transaction) {
-        return res.status(404).json({
-            success: false,
-            message: "Transaction not found"
-        });
+        throw new Error("Transaction not found");
     }
 
     return transaction;
@@ -102,10 +99,7 @@ const updateTransaction = async (id, data) => {
     );
 
     if (!transaction) {
-        return res.status(404).json({
-            success: false,
-            message: "Transaction not found"
-        });
+        throw new Error("Transaction not found");
     }
 
     return transaction;

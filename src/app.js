@@ -42,22 +42,4 @@ app.use("/api/dashboard", dashboardRouter);
 
 
 
-
-
-// Test route to verify authentication middleware...
-app.get("/test", protect, (req, res) => {
-  res.json({ user: req.user });
-});
-
-
-
-// Test route to verify role-based authorization middleware...
-app.get("/admin-test", protect, authorize("admin"), (req, res) => {
-  res.json({ message: "Welcome Admin" });
-});
-
-
-
-
-
 module.exports = app;

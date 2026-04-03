@@ -172,12 +172,18 @@ Copy `.env.example` and rename it to `.env`, then update values:
 PORT=8080
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_secret
+
 ```
 
 4. Run the server
 
 ```
+# Development 
 npm run dev
+
+# Production 
+npm start
+
 ```
 
 ---
